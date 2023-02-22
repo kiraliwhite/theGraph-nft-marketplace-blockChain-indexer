@@ -1,6 +1,10 @@
+# 這個檔案告訴subgraph 如何把所有file 組合在一起
+
 specVersion: 0.0.5
+# 定義欄位的檔案
 schema:
   file: ./schema.graphql
+# 資料來源
 dataSources:
   - kind: ethereum
     name: NftMarketplace
@@ -13,6 +17,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
+      # 合約中的event
       entities:
         - ItemBought
         - ItemCanceled
@@ -20,6 +25,7 @@ dataSources:
       abis:
         - name: NftMarketplace
           file: ./abis/NftMarketplace.json
+      # 當event被觸發時,呼叫對應的handler function(function內容寫在src/nft-marketplace.ts)
       eventHandlers:
         - event: ItemBought(indexed address,indexed address,indexed uint256,uint256)
           handler: handleItemBought
